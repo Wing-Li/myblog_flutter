@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lylblog/res/my_styles.dart';
 import 'package:lylblog/res/my_theme.dart';
+import 'package:lylblog/utils/my_utils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 abstract class BaseState<T extends StatefulWidget> extends State<T> with WidgetsBindingObserver {
   bool isPageVisible = true;
   bool isDispose = false;
-  bool isVip = false;
-  bool isVipSeeLikeMe = false;
+
+  bool isWideScreen = true;
+  double pageHeight = 946.0;
 
   @override
   void initState() {
@@ -16,6 +18,11 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> with Widgets
     WidgetsBinding.instance!.addObserver(this);
 
     super.initState();
+  }
+
+  updatePageSize() {
+    isWideScreen = MyUtils.getScreenWidth(context) >= 762;
+    pageHeight = MyUtils.getScreenHeight(context);
   }
 
   @override

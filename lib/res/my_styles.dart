@@ -49,19 +49,23 @@ class TextStyles {
 
   static TextStyle text(
     double size, {
+    bool isFontWeightBold = false,
     bool isBold = false,
     bool isItalic = false,
     Color color = MyTheme.text_white_block,
     double? letterSpacing,
     double? heightSpacingMult,
+    String? fontFamily,
   }) =>
       base(
         size: size,
         color: color,
+        isFontWeightBold: isFontWeightBold,
         isBold: isBold,
         isItalic: isItalic,
         letterSpacing: letterSpacing,
         heightSpacingMult: heightSpacingMult,
+        fontFamily: fontFamily,
       );
 
   static TextStyle textWhite(
@@ -113,18 +117,35 @@ class TextStyles {
         isBold: isBold,
       );
 
-  static TextStyle textBlock(double size, {Color color = MyTheme.text_white_block, bool isItalic = false}) => base(
+  static TextStyle textBlock(
+    double size, {
+    Color color = MyTheme.text_white_block,
+    bool isItalic = false,
+    double? letterSpacing,
+    double? heightSpacingMult,
+  }) =>
+      base(
         size: size,
         color: color,
         isItalic: isItalic,
         isBold: false,
         isFontWeightBold: true,
+        letterSpacing: letterSpacing,
+        heightSpacingMult: heightSpacingMult,
       );
 
-  static TextStyle textBold(double size, {Color color = MyTheme.block}) => base(
+  static TextStyle textBold(
+    double size, {
+    Color color = MyTheme.block,
+    double? letterSpacing,
+    double? heightSpacingMult,
+  }) =>
+      base(
         size: size,
         color: MyTheme.block,
         isBold: true,
         isFontWeightBold: true,
+        letterSpacing: letterSpacing,
+        heightSpacingMult: heightSpacingMult,
       );
 }

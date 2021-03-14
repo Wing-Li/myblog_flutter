@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lylblog/page/base_state.dart';
-import 'package:lylblog/page/home_page.dart';
+import 'package:lylblog/page/home/home_page.dart';
 import 'package:lylblog/res/my_styles.dart';
 import 'package:lylblog/res/my_theme.dart';
 import 'package:lylblog/utils/my_utils.dart';
@@ -74,6 +74,7 @@ class _BodyLayoutWidgetState extends State<BodyLayoutWidget> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(width: 16),
           Text("MENU", style: TextStyles.textWhite(16)),
           SizedBox(width: 8),
           Icon(Icons.menu, color: MyTheme.white),

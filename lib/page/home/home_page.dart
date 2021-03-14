@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lylblog/page/article/article_list_page.dart';
+import 'package:lylblog/page/base_state.dart';
 import 'package:lylblog/page/body_layout_widget.dart';
 import 'package:lylblog/res/my_styles.dart';
 import 'package:lylblog/res/my_theme.dart';
 import 'package:lylblog/utils/my_utils.dart';
+import 'package:lylblog/view/bottom_about_me_widget.dart';
 import 'package:lylblog/view/my_network_image_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,10 +13,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends BaseState<HomePage> {
   bool isShowAppBarBg = false;
-  bool isWideScreen = true;
-  double pageHeight = 946.0;
 
   ScrollController _scrollController = new ScrollController();
 
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    pageHeight = MyUtils.getScreenHeight(context);
+    updatePageSize();
 
     return BodyLayoutWidget(
       isShowAppBarBg: isShowAppBarBg,
@@ -51,37 +51,33 @@ class _HomePageState extends State<HomePage> {
   }
 
   _body() {
-    return OrientationBuilder(builder: (context, orientation) {
-      isWideScreen = MyUtils.getScreenWidth(context) >= 762;
-
-      return ListView(
-        controller: _scrollController,
-        children: [
-          _welcomeLayout(),
-          _userInfoLayout(),
-          _articleLayout(
-            true,
-            "http://arkadianriver.github.io/spectral/images/pic01.jpg",
-            "MAGNA PRIMIS LOBORTIS SED ULLAMCORPER",
-            "Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.",
-          ),
-          _articleLayout(
-            false,
-            "http://arkadianriver.github.io/spectral/images/pic02.jpg",
-            "MAGNA PRIMIS LOBORTIS SED ULLAMCORPER",
-            "Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.",
-          ),
-          _articleLayout(
-            true,
-            "http://arkadianriver.github.io/spectral/images/pic03.jpg",
-            "MAGNA PRIMIS LOBORTIS SED ULLAMCORPER",
-            "Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.",
-          ),
-          _linkMeLayout(),
-          _aboutLayout(),
-        ],
-      );
-    });
+    return ListView(
+      controller: _scrollController,
+      children: [
+        _welcomeLayout(),
+        _userInfoLayout(),
+        _articleLayout(
+          true,
+          "http://arkadianriver.github.io/spectral/images/pic01.jpg",
+          "MAGNA PRIMIS LOBORTIS SED ULLAMCORPER",
+          "Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.",
+        ),
+        _articleLayout(
+          false,
+          "http://arkadianriver.github.io/spectral/images/pic02.jpg",
+          "MAGNA PRIMIS LOBORTIS SED ULLAMCORPER",
+          "Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.",
+        ),
+        _articleLayout(
+          true,
+          "http://arkadianriver.github.io/spectral/images/pic03.jpg",
+          "MAGNA PRIMIS LOBORTIS SED ULLAMCORPER",
+          "Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.",
+        ),
+        _linkMeLayout(),
+        _aboutLayout(),
+      ],
+    );
   }
 
   _welcomeLayout() {
@@ -320,48 +316,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   _aboutLayout() {
-    return AnimatedOpacity(
-      opacity: 0.95,
-      duration: Duration.zero,
-      child: Container(
-        height: isWideScreen ? 278 : 190,
-        color: MyTheme.bg_tab_bottom,
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.flag, color: MyTheme.text_block_gray_light),
-                SizedBox(width: 24),
-                Icon(Icons.card_giftcard, color: MyTheme.text_block_gray_light),
-                SizedBox(width: 24),
-                Icon(Icons.inbox, color: MyTheme.text_block_gray_light),
-                SizedBox(width: 24),
-                Icon(Icons.face, color: MyTheme.text_block_gray_light),
-                SizedBox(width: 24),
-                Icon(Icons.gradient_outlined, color: MyTheme.text_block_gray_light),
-                SizedBox(width: 24),
-              ],
-            ),
-            SizedBox(height: 48),
-            FractionallySizedBox(
-              widthFactor: 0.8,
-              child: RichText(
-                textAlign: TextAlign.center,
-                strutStyle: StrutStyle(height: 1.4),
-                text: TextSpan(
-                  children: [
-                    TextSpan(text: "© 2016, 2017 YOUR NAME  |  DESIGN: ", style: TextStyles.text(14, color: MyTheme.text_block_gray_light)),
-                    TextSpan(text: "HTML5 UP  |  BUILT WITH: JEKYLL", style: TextStyles.text(14, color: MyTheme.text_block_gray_light)),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return BottomAboutMeWidget(isWideScreen: isWideScreen);
   }
 }

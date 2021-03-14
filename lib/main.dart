@@ -3,7 +3,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-import 'page/home_page.dart';
+import 'page/home/home_page.dart';
 import 'res/my_theme.dart';
 import 'utils/shared_preferences.dart';
 
