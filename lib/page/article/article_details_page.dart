@@ -51,6 +51,7 @@ class _ArticleDetailsPageState extends BaseState<ArticleDetailsPage> {
           _headerLayout(),
           Container(
             color: styleSheet.getBackgroundColor(context),
+            padding: EdgeInsets.symmetric(vertical: 82),
             child: FractionallySizedBox(
               widthFactor: isWideScreen ? 0.70 : 0.90,
               child: Markdown(

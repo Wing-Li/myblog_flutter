@@ -66,7 +66,7 @@ class MyMarkdownStyleSheet {
       h5: TTConstant.smallText,
       h6: TTConstant.smallText,
       strong: TextStyles.text(14, isFontWeightBold: true, heightSpacingMult: 1.8, fontFamily: "楷体"),
-      code: TTConstant.smallSubText,
+      code: TextStyles.textGrayDeep(14, heightSpacingMult: 1.4, fontFamily: "黑体"),
     );
   }
 
@@ -85,7 +85,6 @@ class MyMarkdownStyleSheet {
       em: const TextStyle(fontStyle: FontStyle.italic),
       strong: TTConstant.middleTextWhiteBold,
       code: TTConstant.smallSubText,
-
     );
   }
 

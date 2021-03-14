@@ -32,6 +32,7 @@ class TextStyles {
                 : "Avenir-Medium",
         decoration: textDecoration == null ? TextDecoration.none : textDecoration,
         fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
+        backgroundColor: MyTheme.transparent,
       );
 
   static TextStyle title(
@@ -111,10 +112,20 @@ class TextStyles {
         textDecoration: textDecoration,
       );
 
-  static TextStyle textGrayDeep(double size, {bool isBold = false}) => base(
+  static TextStyle textGrayDeep(
+    double size, {
+    bool isBold = false,
+    double? letterSpacing,
+    double? heightSpacingMult,
+    String? fontFamily,
+  }) =>
+      base(
         size: size,
         color: MyTheme.text_white_gray_deep,
         isBold: isBold,
+        letterSpacing: letterSpacing,
+        heightSpacingMult: heightSpacingMult,
+        fontFamily: fontFamily,
       );
 
   static TextStyle textBlock(
