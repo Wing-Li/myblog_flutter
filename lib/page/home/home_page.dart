@@ -177,8 +177,7 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
                             color: MyTheme.orange,
                             child: Text('ACTIVATE', style: TextStyles.textWhiteBold(14, isFontWeightBold: true)),
                             onPressed: () {
-                              myDataApi.fetchArticleList();
-                              // MyUtils.startPage(context, ArticleListPage());
+                              MyUtils.startPage(context, ArticleListPage());
                             },
                           ),
                         ),
