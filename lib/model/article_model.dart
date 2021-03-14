@@ -6,8 +6,9 @@ class ArticleModel {
   String? title;
   String? bodyContent;
   String? message;
+  String? backgroundUrl;
 
-  ArticleModel({this.className, this.objectId, this.createdAt, this.updatedAt, this.title, this.bodyContent, this.message});
+  ArticleModel({this.className, this.objectId, this.createdAt, this.updatedAt, this.title, this.bodyContent, this.message, this.backgroundUrl});
 
   ArticleModel.fromJson(Map<String, dynamic> json) {
     className = json['className'];
@@ -17,6 +18,7 @@ class ArticleModel {
     title = json['title'];
     bodyContent = json['bodyContent'];
     message = json['message'];
+    backgroundUrl = json['backgroundUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +30,7 @@ class ArticleModel {
     data['title'] = this.title;
     data['bodyContent'] = this.bodyContent;
     data['message'] = this.message;
+    data['backgroundUrl'] = this.backgroundUrl;
     return data;
   }
 }

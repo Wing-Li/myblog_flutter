@@ -55,7 +55,7 @@ class _ArticleListPageState extends BaseState<ArticleListPage> {
             return GestureDetector(
               child: _articleItem(model),
               onTap: () {
-                MyUtils.startPage(context, ArticleDetailsPage());
+                MyUtils.startPage(context, ArticleDetailsPage(model: model));
               },
             );
           }
