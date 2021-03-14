@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:lylblog/page/article/article_list_page.dart';
 import 'package:lylblog/page/base_state.dart';
 import 'package:lylblog/page/body_layout_widget.dart';
@@ -13,14 +14,58 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends BaseState<HomePage> {
+class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
   bool isShowAppBarBg = false;
 
   ScrollController _scrollController = new ScrollController();
 
+  late AnimationController _animationController;
+  late SequenceAnimation _sequenceAnimation;
+
   @override
   void initState() {
     super.initState();
+
+    _animationController = new AnimationController(vsync: this);
+    _sequenceAnimation = new SequenceAnimationBuilder()
+        .addAnimatable(
+            animatable: new Tween<double>(begin: 8.0, end: isWideScreen ? 28 : 20),
+            from: const Duration(milliseconds: 0),
+            to: const Duration(milliseconds: 500),
+            tag: "nameSize")
+        .addAnimatable(
+            animatable: new Tween<double>(begin: 0.0, end: isWideScreen ? 278 : 146),
+            from: const Duration(milliseconds: 500),
+            to: const Duration(milliseconds: 1300),
+            tag: "lineTop")
+        .addAnimatable(
+            animatable: new Tween<double>(begin: 0.0, end: isWideScreen ? 278 : 146),
+            from: const Duration(milliseconds: 500),
+            to: const Duration(milliseconds: 1300),
+            tag: "lineBottom")
+        .addAnimatable(
+            animatable: new ColorTween(begin: MyTheme.bg_tab, end: MyTheme.bg_block_tran),
+            from: const Duration(milliseconds: 2300),
+            to: const Duration(milliseconds: 3500),
+            tag: "headerBg",
+            curve: Curves.easeIn)
+        .addAnimatable(
+            animatable: new Tween<double>(begin: 0.0, end: 1.0),
+            from: const Duration(milliseconds: 2500),
+            to: const Duration(milliseconds: 3500),
+            tag: "messageShow")
+        .addAnimatable(
+            animatable: new Tween<double>(begin: 0.0, end: 56.0),
+            from: const Duration(milliseconds: 5500),
+            to: const Duration(milliseconds: 6500),
+            tag: "moreShowTop")
+        .addAnimatable(
+            animatable: new Tween<double>(begin: 0.0, end: 1.0),
+            from: const Duration(milliseconds: 5500),
+            to: const Duration(milliseconds: 6500),
+            tag: "moreShow")
+        .animate(_animationController);
+    _animationController.forward();
 
     _scrollController.addListener(() {
       var _tempShowTop = _scrollController.offset >= (isWideScreen ? pageHeight : pageHeight * 0.45);
@@ -81,55 +126,85 @@ class _HomePageState extends BaseState<HomePage> {
   }
 
   _welcomeLayout() {
-    return Container(
-      color: MyTheme.bg_block_tran,
-      width: double.infinity,
-      height: isWideScreen ? pageHeight : pageHeight * 0.48,
-      child: Column(
-        children: [
-          Spacer(flex: 5),
-          Column(
-            mainAxisSize: MainAxisSize.min,
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Container(
+          color: _sequenceAnimation["headerBg"].value,
+          width: double.infinity,
+          height: isWideScreen ? pageHeight : pageHeight * 0.48,
+          child: Column(
             children: [
-              Container(width: isWideScreen ? 278 : 146, height: 2.5, color: MyTheme.white),
-              SizedBox(height: isWideScreen ? 18 : 10),
-              Text("Wing Li", style: TextStyles.textWhiteBold(isWideScreen ? 28 : 20, letterSpacing: 6)),
-              SizedBox(height: isWideScreen ? 18 : 10),
-              Container(width: isWideScreen ? 278 : 146, height: 2.5, color: MyTheme.white),
-              SizedBox(height: 56),
-              Text(
-                "ANOTHER FINE RESPONSIVE\nSITE TEMPLATE FREEBIE\nCRAFTED BY HTML5 UP",
-                style: TextStyles.textWhite(16, isFontWeightBold: true, letterSpacing: 3, heightSpacingMult: 1.3),
-                textAlign: TextAlign.center,
+              Spacer(flex: 5),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: isWideScreen ? 278 : 146,
+                    alignment: Alignment.centerLeft,
+                    child: Container(width: _sequenceAnimation["lineTop"].value, height: 2.5, color: MyTheme.white),
+                  ),
+                  SizedBox(height: isWideScreen ? 12 : 6),
+                  Container(
+                    height: 56,
+                    alignment: Alignment.center,
+                    child: Text("Wing Li", style: TextStyles.textWhiteBold(_sequenceAnimation["nameSize"].value, letterSpacing: 6)),
+                  ),
+                  SizedBox(height: isWideScreen ? 12 : 6),
+                  Container(
+                    width: isWideScreen ? 278 : 146,
+                    alignment: Alignment.centerRight,
+                    child: Container(width: _sequenceAnimation["lineBottom"].value, height: 2.5, color: MyTheme.white),
+                  ),
+                  SizedBox(height: 56),
+                  AnimatedOpacity(
+                    opacity: _sequenceAnimation["messageShow"].value,
+                    duration: Duration.zero,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "ANOTHER FINE RESPONSIVE\nSITE TEMPLATE FREEBIE\nCRAFTED BY HTML5 UP",
+                          style: TextStyles.textWhite(16, isFontWeightBold: true, letterSpacing: 3, heightSpacingMult: 1.3),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 28),
+                        ButtonTheme(
+                          minWidth: isWideScreen ? 148 : 288,
+                          height: 48,
+                          child: RaisedButton(
+                            color: MyTheme.orange,
+                            child: Text('ACTIVATE', style: TextStyles.textWhiteBold(14, isFontWeightBold: true)),
+                            onPressed: () {
+                              MyUtils.startPage(context, ArticleListPage());
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 28),
-              ButtonTheme(
-                minWidth: isWideScreen ? 148 : 288,
-                height: 48,
-                child: RaisedButton(
-                  color: MyTheme.orange,
-                  child: Text('ACTIVATE', style: TextStyles.textWhiteBold(14, isFontWeightBold: true)),
-                  onPressed: () {
-                    MyUtils.startPage(context, ArticleListPage());
-                  },
-                ),
-              ),
+              Spacer(flex: 4),
+              isWideScreen
+                  ? AnimatedOpacity(
+                      opacity: _sequenceAnimation["moreShow"].value,
+                      duration: Duration.zero,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("LEARN MORE", style: TextStyles.textWhite(14, letterSpacing: 2)),
+                          SizedBox(height: 8),
+                          Icon(Icons.arrow_downward, color: MyTheme.white, size: 32),
+                          SizedBox(height: _sequenceAnimation["moreShowTop"].value),
+                        ],
+                      ),
+                    )
+                  : Container(),
             ],
           ),
-          Spacer(flex: 4),
-          isWideScreen
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("LEARN MORE", style: TextStyles.textWhite(14, letterSpacing: 2)),
-                    SizedBox(height: 8),
-                    Icon(Icons.arrow_downward, color: MyTheme.white, size: 32),
-                    SizedBox(height: 56),
-                  ],
-                )
-              : Container(),
-        ],
-      ),
+        );
+      },
     );
   }
 
