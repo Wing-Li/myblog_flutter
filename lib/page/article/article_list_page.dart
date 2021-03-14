@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lylblog/model/article_model.dart';
+import 'package:lylblog/net/my_data_api.dart';
 import 'package:lylblog/page/article/article_details_page.dart';
 import 'package:lylblog/page/base_state.dart';
 import 'package:lylblog/res/my_styles.dart';
@@ -21,36 +22,13 @@ class _ArticleListPageState extends BaseState<ArticleListPage> {
   @override
   void initState() {
     super.initState();
-    list.add(ArticleModel(
-        title: "TEXT",
-        createAt: DateTime.now(),
-        message:
-            "This is bold and this is strong. This is italic and this is emphasized. This is superscript text and this is subscript text. This is underlined and this is code: for (;;) { ... }. Finally, this is a link."));
-    list.add(ArticleModel(
-        title: "TEXT",
-        createAt: DateTime.now(),
-        message:
-            "This is bold and this is strong. This is italic and this is emphasized. This is superscript text and this is subscript text. This is underlined and this is code: for (;;) { ... }. Finally, this is a link."));
-    list.add(ArticleModel(
-        title: "TEXT",
-        createAt: DateTime.now(),
-        message:
-            "This is bold and this is strong. This is italic and this is emphasized. This is superscript text and this is subscript text. This is underlined and this is code: for (;;) { ... }. Finally, this is a link."));
-    list.add(ArticleModel(
-        title: "TEXT",
-        createAt: DateTime.now(),
-        message:
-            "This is bold and this is strong. This is italic and this is emphasized. This is superscript text and this is subscript text. This is underlined and this is code: for (;;) { ... }. Finally, this is a link."));
-    list.add(ArticleModel(
-        title: "TEXT",
-        createAt: DateTime.now(),
-        message:
-            "This is bold and this is strong. This is italic and this is emphasized. This is superscript text and this is subscript text. This is underlined and this is code: for (;;) { ... }. Finally, this is a link."));
-    list.add(ArticleModel(
-        title: "TEXT",
-        createAt: DateTime.now(),
-        message:
-            "This is bold and this is strong. This is italic and this is emphasized. This is superscript text and this is subscript text. This is underlined and this is code: for (;;) { ... }. Finally, this is a link."));
+
+    Future.delayed(Duration.zero, _fetchData);
+  }
+
+  _fetchData() async {
+    list = await myDataApi.fetchArticleList();
+    setState(() {});
   }
 
   @override
@@ -129,16 +107,16 @@ class _ArticleListPageState extends BaseState<ArticleListPage> {
           children: [
             SizedBox(height: 48),
             Text(
-              model.title,
+              model.title ?? "",
               style: TextStyles.textBold(18, letterSpacing: 4, heightSpacingMult: 1.5),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(height: 16),
-            model.createAt == null ? Container() : Text(MyDateUtils.formatDate(model.createAt), style: TextStyles.textGrayDeep(14)),
+            MyUtils.isEmpty(model.createdAt) ? Container() : Text(model.createdAt?.substring(0, 19) ?? "", style: TextStyles.textGrayDeep(14)),
             SizedBox(height: 24),
             Text(
-              model.message,
+              model.message ?? "",
               style: TextStyles.text(16, heightSpacingMult: 1.5),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,

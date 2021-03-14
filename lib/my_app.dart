@@ -19,12 +19,14 @@ class MyApp {
   static Map<String, String> get config {
     if (MyApp.env == ENV.DEV) {
       return {
-        Config.BASE_URL: '',
+        Config.LC_APP_ID: 'ie8N1u3hE5u9B1CYPfyMg785-gzGzoHsz',
+        Config.LC_APP_KEY: 'YeCAFd6AaVLMBjCp3z2affli',
       };
     }
     if (MyApp.env == ENV.PRODUCTION) {
       return {
-        Config.BASE_URL: '',
+        Config.LC_APP_ID: '',
+        Config.LC_APP_KEY: '',
       };
     }
     return {};

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
+import 'package:lylblog/net/my_data_api.dart';
 import 'package:lylblog/page/article/article_list_page.dart';
 import 'package:lylblog/page/base_state.dart';
 import 'package:lylblog/page/body_layout_widget.dart';
@@ -176,7 +177,8 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
                             color: MyTheme.orange,
                             child: Text('ACTIVATE', style: TextStyles.textWhiteBold(14, isFontWeightBold: true)),
                             onPressed: () {
-                              MyUtils.startPage(context, ArticleListPage());
+                              myDataApi.fetchArticleList();
+                              // MyUtils.startPage(context, ArticleListPage());
                             },
                           ),
                         ),
