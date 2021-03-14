@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lylblog/page/article/article_list_page.dart';
+import 'package:lylblog/page/body_layout_widget.dart';
 import 'package:lylblog/res/my_styles.dart';
 import 'package:lylblog/res/my_theme.dart';
 import 'package:lylblog/utils/my_utils.dart';
@@ -41,107 +43,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     pageHeight = MyUtils.getScreenHeight(context);
 
-    return Scaffold(
-      endDrawer: Drawer(child: _drawer()),
-      body: Stack(
-        children: [
-          MyNetworkImage(
-            "http://arkadianriver.github.io/spectral/images/banner.jpg",
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-            placeholderWidget: Container(color: MyTheme.bg_tab),
-          ),
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: _body(),
-          ),
-          _appBar(),
-        ],
-      ),
-    );
-  }
-
-  _appBar() {
-    return Stack(
-      children: [
-        AnimatedOpacity(
-          opacity: isShowAppBarBg ? 1.0 : 0.0,
-          duration: Duration(milliseconds: 300),
-          child: Container(
-            width: double.infinity,
-            height: 56,
-            color: MyTheme.bg_tab,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            alignment: Alignment.centerLeft,
-            child: Text("WING LI", style: TextStyles.title(18, isFontWeightBold: true)),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          bottom: 0,
-          right: 0,
-          child: Builder(builder: (context) {
-            return GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("MENU", style: TextStyles.textWhite(16)),
-                  SizedBox(width: 8),
-                  Icon(Icons.menu, color: MyTheme.white),
-                  SizedBox(width: 16),
-                ],
-              ),
-              onTap: () => Scaffold.of(context).openEndDrawer(),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-
-  _drawer() {
-    return Container(
-      color: MyTheme.bg_home_item,
-      padding: EdgeInsets.symmetric(horizontal: 24),
-      child: ListView(
-        children: <Widget>[
-          GestureDetector(
-            child: Container(
-              height: 52,
-              alignment: Alignment.centerRight,
-              child: Icon(Icons.close, color: MyTheme.white, size: 28),
-            ),
-            onTap: () => MyUtils.disMissLoadingDialog(context),
-          ),
-          SizedBox(height: 8),
-          _drawerItem(Icons.home, "Home"),
-          Divider(height: 0.4, color: MyTheme.line_deep),
-          _drawerItem(Icons.library_books_outlined, "Library"),
-          Divider(height: 0.4, color: MyTheme.line_deep),
-          _drawerItem(Icons.archive, "Archive"),
-          Divider(height: 0.4, color: MyTheme.line_deep),
-          _drawerItem(Icons.person_rounded, "About Me"),
-        ],
-      ),
-    );
-  }
-
-  _drawerItem(IconData icon, String title) {
-    return Container(
-      height: 54,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(width: 16),
-          Icon(icon, color: MyTheme.white),
-          SizedBox(width: 24),
-          Text(title, style: TextStyles.textWhite(16)),
-        ],
-      ),
+    return BodyLayoutWidget(
+      isShowAppBarBg: isShowAppBarBg,
+      backgroundImageUrl: "http://arkadianriver.github.io/spectral/images/banner.jpg",
+      body: _body(),
     );
   }
 
@@ -208,7 +113,9 @@ class _HomePageState extends State<HomePage> {
                 child: RaisedButton(
                   color: MyTheme.orange,
                   child: Text('ACTIVATE', style: TextStyles.textWhiteBold(14, isFontWeightBold: true)),
-                  onPressed: () {},
+                  onPressed: () {
+                    MyUtils.startPage(context, ArticleListPage());
+                  },
                 ),
               ),
             ],
@@ -357,7 +264,7 @@ class _HomePageState extends State<HomePage> {
       height: 302,
       alignment: Alignment.center,
       child: FractionallySizedBox(
-        widthFactor: isShowAppBarBg ? 0.75 : 0.85,
+        widthFactor: isWideScreen ? 0.75 : 0.85,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -387,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                     height: 48,
                     child: RaisedButton(
                       color: MyTheme.orange,
-                      child: Text('ACTIVATE', style: TextStyles.textWhiteBold(isShowAppBarBg ? 14 : 12, isFontWeightBold: true)),
+                      child: Text('ACTIVATE', style: TextStyles.textWhiteBold(isWideScreen ? 14 : 12, isFontWeightBold: true)),
                       onPressed: () {},
                     ),
                   ),
@@ -399,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                       borderSide: BorderSide(color: Colors.white, width: 2),
                       disabledBorderColor: Colors.grey,
                       highlightedBorderColor: Colors.red,
-                      child: Text('LEARN MORE', style: TextStyles.textWhiteBold(isShowAppBarBg ? 14 : 10, isFontWeightBold: true)),
+                      child: Text('LEARN MORE', style: TextStyles.textWhiteBold(isWideScreen ? 14 : 10, isFontWeightBold: true)),
                       onPressed: () {},
                     ),
                   ),
@@ -417,7 +324,7 @@ class _HomePageState extends State<HomePage> {
       opacity: 0.95,
       duration: Duration.zero,
       child: Container(
-        height: isShowAppBarBg ? 278 : 190,
+        height: isWideScreen ? 278 : 190,
         color: MyTheme.bg_tab_bottom,
         alignment: Alignment.center,
         child: Column(

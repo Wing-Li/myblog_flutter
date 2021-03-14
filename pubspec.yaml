@@ -45,7 +45,7 @@ dependencies:
 
 # UI
   # 下拉刷新 与 上滑加载
-  pull_to_refresh: 1.6.3
+  pull_to_refresh: ^1.6.4
   # 轮播图
   flutter_swiper: ^1.1.6
   # 加载动画
