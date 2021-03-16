@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lylblog/page/base_state.dart';
 import 'package:lylblog/page/home/home_page.dart';
+import 'package:lylblog/page/topic/topic_list_page.dart';
 import 'package:lylblog/res/my_styles.dart';
 import 'package:lylblog/res/my_theme.dart';
 import 'package:lylblog/utils/my_utils.dart';
 import 'package:lylblog/view/my_app_bar.dart';
 import 'package:lylblog/view/my_network_image_widget.dart';
 
-import 'article/article_list_page.dart';
+import '../article/article_list_page.dart';
 
 class BodyLayoutWidget extends StatefulWidget {
   final bool isShowAppBarBg;
@@ -107,7 +108,10 @@ class _BodyLayoutWidgetState extends State<BodyLayoutWidget> {
             onTap: () => MyUtils.startPageGradient(context, HomePage()),
           ),
           Divider(height: 0.4, color: MyTheme.line_deep),
-          _drawerItem(Icons.library_books_outlined, "Library"),
+          GestureDetector(
+            child: _drawerItem(Icons.library_books_outlined, "Topic"),
+            onTap: () => MyUtils.startPageGradient(context, TopicListPage()),
+          ),
           Divider(height: 0.4, color: MyTheme.line_deep),
           InkWell(
             child: _drawerItem(Icons.archive, "Archive"),

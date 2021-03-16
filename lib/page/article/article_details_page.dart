@@ -9,7 +9,7 @@ import 'package:lylblog/utils/my_date_utils.dart';
 import 'package:lylblog/utils/my_utils.dart';
 import 'package:lylblog/view/bottom_about_me_widget.dart';
 
-import '../body_layout_widget.dart';
+import '../home/body_layout_widget.dart';
 
 class ArticleDetailsPage extends StatefulWidget {
   final ArticleModel? model;

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
+import 'package:lylblog/model/blog_info_data.dart';
 import 'package:lylblog/net/my_data_api.dart';
 import 'package:lylblog/page/article/article_list_page.dart';
 import 'package:lylblog/page/base_state.dart';
-import 'package:lylblog/page/body_layout_widget.dart';
+import 'package:lylblog/page/home/body_layout_widget.dart';
 import 'package:lylblog/res/my_styles.dart';
 import 'package:lylblog/res/my_theme.dart';
 import 'package:lylblog/utils/my_utils.dart';
@@ -19,9 +20,11 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
   bool isShowAppBarBg = false;
 
   ScrollController _scrollController = new ScrollController();
-
   late AnimationController _animationController;
   late SequenceAnimation _sequenceAnimation;
+
+  String mBlogName = "Wing Li";
+  String mBlogIntroduction = "To give up and get is nothing more than a kind of samsara. If you see through it, you will be relieved.";
 
   @override
   void initState() {
@@ -76,6 +79,17 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
         });
       }
     });
+
+    Future.delayed(Duration.zero, _initConfig);
+  }
+
+  _initConfig() async {
+    await myDataApi.initConfig();
+
+    mBlogName = BlogInfoData.getBlogName();
+    mBlogIntroduction = BlogInfoData.getBlogIntroduction();
+
+    setState(() {});
   }
 
   @override
@@ -149,7 +163,7 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
                   Container(
                     height: 56,
                     alignment: Alignment.center,
-                    child: Text("Wing Li", style: TextStyles.textWhiteBold(_sequenceAnimation["nameSize"].value, letterSpacing: 6)),
+                    child: Text(mBlogName, style: TextStyles.textWhiteBold(_sequenceAnimation["nameSize"].value, letterSpacing: 6)),
                   ),
                   SizedBox(height: isWideScreen ? 12 : 6),
                   Container(
@@ -157,19 +171,22 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
                     alignment: Alignment.centerRight,
                     child: Container(width: _sequenceAnimation["lineBottom"].value, height: 2.5, color: MyTheme.white),
                   ),
-                  SizedBox(height: 56),
+                  SizedBox(height: 48),
                   AnimatedOpacity(
                     opacity: _sequenceAnimation["messageShow"].value,
                     duration: Duration.zero,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          "ANOTHER FINE RESPONSIVE\nSITE TEMPLATE FREEBIE\nCRAFTED BY HTML5 UP",
-                          style: TextStyles.textWhite(16, isFontWeightBold: true, letterSpacing: 3, heightSpacingMult: 1.3),
-                          textAlign: TextAlign.center,
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: isWideScreen ? 300 : 155),
+                          child: Text(
+                            mBlogIntroduction,
+                            style: TextStyles.textWhite(16, isFontWeightBold: true, letterSpacing: 3, heightSpacingMult: 1.3),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        SizedBox(height: 28),
+                        SizedBox(height: 32),
                         ButtonTheme(
                           minWidth: isWideScreen ? 148 : 288,
                           height: 48,

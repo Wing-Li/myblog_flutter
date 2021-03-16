@@ -150,6 +150,7 @@ class TextStyles {
     Color color = MyTheme.block,
     double? letterSpacing,
     double? heightSpacingMult,
+    String? fontFamily,
   }) =>
       base(
         size: size,
@@ -158,5 +159,6 @@ class TextStyles {
         isFontWeightBold: true,
         letterSpacing: letterSpacing,
         heightSpacingMult: heightSpacingMult,
+        fontFamily: fontFamily,
       );
 }

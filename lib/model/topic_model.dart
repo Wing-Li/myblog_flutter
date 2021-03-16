@@ -1,33 +1,33 @@
-class ArticleModel {
+class TopicModel {
   String? className;
   String? objectId;
   String? createdAt;
   String? updatedAt;
-  String? title;
-  String? bodyContent;
+  String? name;
   String? message;
-  String? backgroundUrl;
+  String? sort;
+  String? type;
 
-  ArticleModel({
+  TopicModel({
     this.className,
     this.objectId,
     this.createdAt,
     this.updatedAt,
-    this.title,
-    this.bodyContent,
+    this.name,
     this.message,
-    this.backgroundUrl,
+    this.sort,
+    this.type,
   });
 
-  ArticleModel.fromJson(Map<String, dynamic> json) {
+  TopicModel.fromJson(Map<String, dynamic> json) {
     className = json['className'];
     objectId = json['objectId'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    title = json['title'];
-    bodyContent = json['bodyContent'];
+    name = json['name'];
     message = json['message'];
-    backgroundUrl = json['backgroundUrl'];
+    sort = json['sort'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,10 +36,10 @@ class ArticleModel {
     data['objectId'] = this.objectId;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['title'] = this.title;
-    data['bodyContent'] = this.bodyContent;
+    data['name'] = this.name;
     data['message'] = this.message;
-    data['backgroundUrl'] = this.backgroundUrl;
+    data['sort'] = this.sort;
+    data['type'] = this.type;
     return data;
   }
 }

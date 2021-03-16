@@ -34,9 +34,9 @@ class SpUtil {
     return _spf.get(key);
   }
 
-  getString(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.getString(key);
+  String getString(String key) {
+    if (_beforeCheck()) return "";
+    return _spf.getString(key) ?? "";
   }
 
   Future<bool>? putString(String key, String value) {
