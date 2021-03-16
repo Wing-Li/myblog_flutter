@@ -1,3 +1,5 @@
+import 'package:lylblog/model/topic_model.dart';
+
 class ArticleModel {
   String? className;
   String? objectId;
@@ -7,6 +9,8 @@ class ArticleModel {
   String? bodyContent;
   String? message;
   String? backgroundUrl;
+  TopicModel? topic;
+  bool isHome = false;
 
   ArticleModel({
     this.className,
@@ -17,6 +21,8 @@ class ArticleModel {
     this.bodyContent,
     this.message,
     this.backgroundUrl,
+    this.isHome = false,
+    this.topic,
   });
 
   ArticleModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +34,8 @@ class ArticleModel {
     bodyContent = json['bodyContent'];
     message = json['message'];
     backgroundUrl = json['backgroundUrl'];
+    isHome = json['isHome'];
+    topic = json['topic'] != null ? TopicModel.fromJson(json['topic']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +48,8 @@ class ArticleModel {
     data['bodyContent'] = this.bodyContent;
     data['message'] = this.message;
     data['backgroundUrl'] = this.backgroundUrl;
+    data['isHome'] = this.isHome;
+    if (this.topic != null) data['topic'] = this.topic?.toJson();
     return data;
   }
 }
