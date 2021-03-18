@@ -26,6 +26,9 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
   String mBlogName = "Wing Li";
   String mBlogIntroduction = "To give up and get is nothing more than a kind of samsara. If you see through it, you will be relieved.";
 
+  String mBodyTitle = "每一个不曾起舞的日子，都是对声明的辜负。";
+  String mBodySubtitle = "经历的越多越深深的明白：人各有志。 人与人之间，思想与认知的差异是巨大的。";
+
   @override
   void initState() {
     super.initState();
@@ -178,8 +181,8 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: isWideScreen ? 300 : 155),
+                        FractionallySizedBox(
+                          widthFactor: isWideScreen ? 0.35 : 0.85,
                           child: Text(
                             mBlogIntroduction,
                             style: TextStyles.textWhite(16, isFontWeightBold: true, letterSpacing: 3, heightSpacingMult: 1.3),
@@ -231,13 +234,13 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
       color: MyTheme.bg_home_item,
       height: MyUtils.getScreenHeight(context) * 370 / 900,
       child: FractionallySizedBox(
-        widthFactor: isWideScreen ? 0.60 : 0.85,
+        widthFactor: isWideScreen ? 0.60 : 0.90,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "ARCU ALIQUET VEL LOBORTIS ATA NISL EGET AUGUE AMET ALIQUET NISL CEP DONEC",
+                mBodyTitle,
                 style: TextStyles.textWhiteBold(isWideScreen ? 18 : 16, letterSpacing: 4, heightSpacingMult: 1.7),
                 textAlign: TextAlign.center,
                 maxLines: 3,
@@ -247,7 +250,7 @@ class _HomePageState extends BaseState<HomePage> with TickerProviderStateMixin {
               Divider(height: 1, color: MyTheme.line_deep),
               SizedBox(height: 16),
               Text(
-                "Aliquam ut ex ut augue consectetur interdum. Donec amet imperdiet eleifend fringilla tincidunt. Nullam dui leo Aenean mi ligula, rhoncus ullamcorper.",
+                mBodySubtitle,
                 style: TextStyles.textWhite(isWideScreen ? 16 : 14, heightSpacingMult: 1.5),
                 textAlign: TextAlign.center,
                 maxLines: 3,

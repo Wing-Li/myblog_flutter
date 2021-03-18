@@ -28,7 +28,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
-  video_player: ^2.0.2
   # 基础分享
   share_plus: ^2.0.0
   # BotToast
@@ -50,7 +49,8 @@ dependencies:
   # 加载动画
   loading_indicator: ^1.2.0
   # Markdown
-  flutter_markdown: ^0.6.0
+#  flutter_markdown: ^0.6.0
+  markdown_widget: ^1.2.6
   # 动画控制
   flutter_sequence_animation: ^3.0.1
 
